@@ -59,8 +59,12 @@ public class StatsBuffer {
                     oldestElementIndex = INDEX_COUNTER + 1;
                 }
                 // Update statistic deleting old statistic by oldest index entry in array.
-                BigDecimal updated = fullStats.getSum().subtract(data[oldestElementIndex].getSum());
-                fullStats.setSum(updated);
+                BigDecimal updatedSum = fullStats.getSum().subtract(data[oldestElementIndex].getSum());
+                fullStats.setSum(updatedSum);
+                fullStats.setCount(fullStats.getCount() - data[oldestElementIndex].getCount());
+                BigDecimal updatedAvg = avg(fullStats.getSum(), fullStats.getCount());
+                fullStats.setAvg(updatedAvg);
+
             }
 
             // if it is first entry in the array
