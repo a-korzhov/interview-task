@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -139,7 +138,7 @@ public class StatsBuffer {
         fullStats.setMax(BigDecimal.ZERO);
         fullStats.setMin(BigDecimal.ZERO);
         fullStats.setCount(0);
-        fullStats.setTimestamp(null);
+        fullStats.setTimestamp(LocalDateTime.MIN);
     }
 
     private StatisticEntry fillStats(Transaction t, BigDecimal amount) {
