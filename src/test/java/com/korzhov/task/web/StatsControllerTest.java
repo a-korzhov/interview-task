@@ -1,7 +1,7 @@
 package com.korzhov.task.web;
 
-import com.korzhov.task.domain.StatisticEntry;
-import com.korzhov.task.service.StatisticService;
+import com.korzhov.task.domain.StatisticResponse;
+import com.korzhov.task.service.StatisticServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -11,9 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
@@ -29,7 +27,7 @@ class StatsControllerTest {
     private final static String API_TRANSACTIONS = "/api/transactions";
     private final static String API_STATISTICS = "/api/stats";
     @MockBean
-    StatisticService statisticService;
+    StatisticServiceImpl statisticService;
 
     @Test
     public void should_add_transaction() throws Exception {
@@ -55,9 +53,8 @@ class StatsControllerTest {
 
     @Test
     public void should_return_statistics() throws Exception {
-        when(statisticService.getStats()).thenReturn(
-                new StatisticEntry(BigDecimal.valueOf(4.00), BigDecimal.valueOf(2.00), BigDecimal.valueOf(3.00), BigDecimal.valueOf(1.00), 2,
-                        LocalDateTime.now())
+        when(statisticService.getStatistic()).thenReturn(
+                new StatisticResponse(BigDecimal.valueOf(4.00), BigDecimal.valueOf(2.00), BigDecimal.valueOf(3.00), BigDecimal.valueOf(1.00), 2)
         );
 
         mvc.perform(get(API_STATISTICS).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
