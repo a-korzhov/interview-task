@@ -1,6 +1,6 @@
 package com.korzhov.task.service;
 
-import com.korzhov.task.exception.StatisticIsEmptyException;
+import com.korzhov.task.exception.StatisticBufferDataIsNotPreparedException;
 import com.korzhov.task.exception.TransactionExpiredException;
 import com.korzhov.task.model.StatisticEntry;
 import com.korzhov.task.model.Transaction;
@@ -82,7 +82,7 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     public StatisticResponse getStatistic() {
         if (Arrays.stream(statisticBuffer.getData()).allMatch(Objects::isNull)) {
-            throw new StatisticIsEmptyException(STATISTIC_NOT_PREPARED);
+            throw new StatisticBufferDataIsNotPreparedException(STATISTIC_NOT_PREPARED);
         }
         StatisticResponse response = new StatisticResponse();
         StatisticEntry[] data = statisticBuffer.getData();

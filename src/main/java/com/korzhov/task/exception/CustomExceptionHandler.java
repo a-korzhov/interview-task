@@ -28,7 +28,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     // Additional exception for empty statistic result
-    @ExceptionHandler(value = {StatisticIsEmptyException.class})
+    @ExceptionHandler(value = {StatisticBufferDataIsNotPreparedException.class})
     protected ResponseEntity<Object> handleNoContentStatistic(RuntimeException ex) {
         ApiError apiError = new ApiError(HttpStatus.NO_CONTENT);
         apiError.setMessage(ex.getMessage());
