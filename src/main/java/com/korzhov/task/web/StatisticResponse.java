@@ -1,4 +1,4 @@
-package com.korzhov.task.domain;
+package com.korzhov.task.web;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

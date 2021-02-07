@@ -11,12 +11,27 @@ import static com.korzhov.task.exception.ErrorResponseEntityBuilder.buildRespons
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
-
-    @ExceptionHandler(value = {TransactionException.class})
-    protected ResponseEntity<Object> handleNoContent(RuntimeException ex){
+    // 204 – if the transaction is older than 60 seconds
+    @ExceptionHandler(value = {TransactionExpiredException.class})
+    protected ResponseEntity<Object> handleNoContent(RuntimeException ex) {
         ApiError apiError = new ApiError(HttpStatus.NO_CONTENT);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
 
+    // 422 – if the transaction date is in the future
+    @ExceptionHandler(value = {TransactionInFutureException.class})
+    protected ResponseEntity<Object> handleUnprocessableEntity(RuntimeException ex) {
+        ApiError apiError = new ApiError(HttpStatus.UNPROCESSABLE_ENTITY);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    // Additional exception for empty statistic result
+    @ExceptionHandler(value = {StatisticIsEmptyException.class})
+    protected ResponseEntity<Object> handleNoContentStatistic(RuntimeException ex) {
+        ApiError apiError = new ApiError(HttpStatus.NO_CONTENT);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
 }
