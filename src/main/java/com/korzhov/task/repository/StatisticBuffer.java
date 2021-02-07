@@ -43,16 +43,14 @@ public class StatisticBuffer {
     }
 
     public void prepareInMemoryDatabase() {
-        if (hasOnlyNulls()) {
-            for (int i = 0; i < data.length; i++) {
-                data[i] = new StatisticEntry(
-                        BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
-                        ZERO_TRANSACTIONS,
-                        LocalDateTime.MIN
-                );
-            }
-            this.isEmpty = true;
+        for (int i = 0; i < data.length; i++) {
+            data[i] = new StatisticEntry(
+                    BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
+                    ZERO_TRANSACTIONS,
+                    LocalDateTime.MIN
+            );
         }
+        this.isEmpty = true;
     }
 
     public boolean hasOnlyNulls() {
