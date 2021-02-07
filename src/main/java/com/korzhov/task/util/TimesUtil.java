@@ -12,7 +12,7 @@ public class TimesUtil {
 
     // returns false if epoch seconds are not equals
     public static boolean compareEpochSeconds(Transaction t, StatisticEntry s) {
-        return t.getTimestamp().toEpochSecond(ZoneOffset.UTC) != s.getTimestamp().toEpochSecond();
+        return t.getTimestamp().toEpochSecond(ZoneOffset.UTC) == s.getTimestamp().toEpochSecond();
     }
 
     // returns true if timestamp is expired

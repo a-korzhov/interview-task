@@ -34,7 +34,7 @@ public class StatsController {
         if (transaction.getTimestamp().isAfter(LocalDateTime.now())) {
             throw new TransactionInFutureException(TRANSACTION_IN_FUTURE);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(statisticsService.createTransaction(transaction));
+        return ResponseEntity.status(HttpStatus.CREATED).body(statisticsService.saveTransaction(transaction));
     }
 
 

@@ -6,7 +6,7 @@ import com.korzhov.task.web.StatisticResponse;
 public interface StatisticService {
     StatisticResponse getStatistic();
 
-    Transaction createTransaction(Transaction t);
+    Transaction saveTransaction(Transaction t);
 
     void deleteStatistic();
 }

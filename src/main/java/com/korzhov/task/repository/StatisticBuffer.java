@@ -13,9 +13,6 @@ import static com.korzhov.task.Constants.ZERO_TRANSACTIONS;
 @Component
 @Slf4j
 public class StatisticBuffer {
-    // Assume, that we keep statistics of transactions in array per 1 second.
-    // 60 Seconds = 60 statistic entries can be inserted to the array.
-
     // Assume that MAX capacity of buffer is 1000 statistic entries per 60 seconds.
     private static final int CAPACITY = 1000;
 
@@ -31,18 +28,7 @@ public class StatisticBuffer {
         this.data = new StatisticEntry[CAPACITY];
     }
 
-
-    public void clear() {
-        for (int i = 0; i < data.length - 1; i++) {
-            data[i] = new StatisticEntry(
-                    BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
-                    ZERO_TRANSACTIONS,
-                    LocalDateTime.MIN
-            );
-        }
-    }
-
-    public void prepareInMemoryDatabase() {
+    public void clearOrPrepareInMemoryDatabase() {
         for (int i = 0; i < data.length; i++) {
             data[i] = new StatisticEntry(
                     BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
@@ -63,20 +49,16 @@ public class StatisticBuffer {
         return isNull;
     }
 
-    public StatisticEntry[] getData() {
-        return data;
-    }
-
-    public StatisticEntry getEntryByIndex(int index) {
-        return data[index];
-    }
-
     public void updateIndexCounter() {
         if (INDEX_COUNTER == data.length - 1) {
             INDEX_COUNTER = 0;
         } else {
             INDEX_COUNTER++;
         }
+    }
+
+    public StatisticEntry getEntryByIndex(int index) {
+        return data[index];
     }
 
     public boolean isEmpty() {
@@ -86,4 +68,9 @@ public class StatisticBuffer {
     public void setEmpty(boolean empty) {
         isEmpty = empty;
     }
+
+    public StatisticEntry[] getData() {
+        return data;
+    }
+
 }

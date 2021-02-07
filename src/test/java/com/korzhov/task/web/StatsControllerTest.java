@@ -1,6 +1,5 @@
 package com.korzhov.task.web;
 
-import com.korzhov.task.domain.StatisticResponse;
 import com.korzhov.task.service.StatisticServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +44,10 @@ class StatsControllerTest {
 
 
     @Test
-    public void should_return_bad_request_if_transaction_in_future() throws Exception {
+    public void should_return_unprocessable_entity_if_transaction_in_future() throws Exception {
         mvc.perform(post(API_TRANSACTIONS).contentType(MediaType.APPLICATION_JSON)
                 .content(createTransaction(new BigDecimal("1.23"), LocalDateTime.now(ZoneOffset.UTC).plusMinutes(5))))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
@@ -59,7 +58,7 @@ class StatsControllerTest {
 
         mvc.perform(get(API_STATISTICS).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith("application/json")).andExpect(jsonPath("count", is(2)))
-                .andExpect(jsonPath("sum", is("4.00"))).andExpect(jsonPath("avg", is("2.00")));
+                .andExpect(jsonPath("sum", is(4.00))).andExpect(jsonPath("avg", is(2.00)));
     }
 
     @Test
