@@ -88,6 +88,7 @@ public class StatisticServiceImpl implements StatisticService {
         StatisticEntry[] data = statisticBuffer.getData();
 
         List<StatisticEntry> actualStatisticEntries = Arrays.stream(data)
+                // get actual statistics, ignoring expired and empty data.
                 .filter(s -> !isExpired(s.getTimestamp().toLocalDateTime()) && s.getTimestamp().toEpochSecond() > ZERO_EPOCH_SECONDS)
                 .collect(Collectors.toList());
 
